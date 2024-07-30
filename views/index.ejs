@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>NoteFlix</title>
+</head>
+
+<body>
+  <div class="main w-full min-h-screen bg-zinc-900 p-10">
+    <div class="navbar text-5xl text-red-500 font-extrabold mb-10">NoteFlix</div>
+    <div class="form text-white">
+      <form action="/create" method="post">
+        <input class="block w-2/5 rounded-md outline-none px-5 py-2 bg-zinc-800" type="text"
+          placeholder="Title goes here..." name="title">
+        <textarea class="block w-2/5 h-40 rounded-md outline-none mt-2 px-5 py-2 bg-zinc-800 resize-none"
+          placeholder="Write your note here..." name="details"></textarea>
+        <input class="mt-4 bg-red-500 text-zinc-100 tracking-tighter px-5 py-2 rounded-md" type="submit"
+          value="Create Note">
+      </form>
+    </div>
+    <div class="tasks pt-10 flex gap-3 flex-wrap">
+      <% if(files.length > 0) { %>
+        <% files.forEach((val) => { %>
+          <div class="task min-w-72 px-3 py-4 bg-zinc-800 rounded-md">
+            <div class="flex justify-between items-center">
+              <h1 class="text-white text-2xl font-bold tracking-tighter">
+                <%= val.slice(0, val.length - 4) %>
+              </h1>
+              <form action="/delete" method="post" class="inline">
+                <input type="hidden" name="filename" value="<%= val %>">
+                <button type="submit" class="text-red-500"><i class="fa fa-trash" aria-hidden="true"></i></button>
+              </form>
+            </div>
+            <div class="flex justify-between mt-3">
+              <a class="text-blue-500 inline-block" href="/file/<%= val %>">Read note</a>
+              <a class="text-zinc-400" href="/edit/<%= val %>">Edit</a>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <h3 class="text-zinc-600">No Notes Yet</h3>
+      <% } %>
+    </div>
+  </div>
+</body>
+
+</html>
